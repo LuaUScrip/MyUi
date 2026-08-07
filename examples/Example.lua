@@ -1,75 +1,53 @@
-local AntiGodHub = require(path.to.Library)
+-- Load the UILib
+local UILib = require(game.ServerScriptService:WaitForChild("UILib_Fixed")) -- Adjust path as needed
 
-local UI = AntiGodHub.new({
-    Title = "AntiGodHub",
-    Width = 210,
-    Height = 285,
-})
+-- Create UI with custom title, centered position, and footer
+local UI = UILib.new("SPEED VS GIANT", UDim2.new(0.5, -125, 0.5, -100), "YouTube:AntiGodHub")
 
-UI:Toggle({
-    Name = "Dupo Cash (all)",
-    Default = false,
-    Callback = function(enabled)
-        print("Dupo Cash (all):", enabled)
-    end,
-})
+-- Set custom size (width, height)
+UI:SetSize(250, 200)
 
-UI:Toggle({
-    Name = "Dupo Cash (nearest)",
-    Default = false,
-    Callback = function(enabled)
-        print("Dupo Cash (nearest):", enabled)
-    end,
-})
+-- Add buttons like in the image
+UI:AddButton("Give Cash", nil, function()
+	print("Give Cash clicked")
+	-- Add your code here
+end)
 
-UI:Toggle({
-    Name = "Noclip",
-    Default = false,
-    Callback = function(enabled)
-        print("Noclip:", enabled)
-    end,
-})
+UI:AddButton("Inf Wins", nil, function()
+	print("Inf Wins clicked")
+	-- Add your code here
+end)
 
-UI:Slider({
-    Name = "Walk Speed",
-    Min = 0,
-    Max = 1000,
-    Default = 100,
+-- Add toggles
+local speedUpgradeContainer, getSpeedUpgradeState = UI:AddToggle("Speed Upgrade", function(state)
+	print("Speed Upgrade toggled:", state)
+	-- Add your code here
+end)
 
-    -- The value shown at the top-right of the slider
-    -- is directly editable. No extra custom-value box
-    -- appears underneath the slider.
-    Callback = function(value)
-        print("Walk Speed:", value)
-    end,
-})
+-- Add text input box for custom values
+local cashInputContainer, getCashInput = UI:AddTextBox("Cash Amount", "Enter amount...", function(value, enterPressed)
+	if enterPressed then
+		print("Cash input entered:", value)
+		-- Add your code here to use the value
+	end
+end)
 
-UI:Button({
-    Name = "InfJump",
-    Text = "Inf Jump",
-    Callback = function()
-        print("Inf Jump clicked")
-    end,
-})
+-- Add another text input
+local multInputContainer, getMultInput = UI:AddTextBox("Multiplier", "e.g. 2.5", function(value, enterPressed)
+	if enterPressed then
+		print("Multiplier entered:", value)
+		-- Add your code here
+	end
+end)
 
-UI:Divider()
+-- Add label with YouTube credit
+UI:AddLabel("YouTuber: Tera IsMe", "Custom Script")
 
-UI:Footer("YouTube: AntiGodHub")
+-- Get input values anytime
+-- local currentCash = getCashInput()
+-- local currentMult = getMultInput()
 
--- Example standalone controls:
--- UI:Section("Extra")
--- UI:Value({
---     Name = "Custom Value",
---     Default = "100",
---     Callback = function(value)
---         print("Custom value:", value)
---     end,
--- })
--- UI:Dropdown({
---     Name = "Dropdown",
---     Values = {"Option 1", "Option 2", "Option 3"},
---     Default = "Option 1",
---     Callback = function(value)
---         print("Selected:", value)
---     end,
--- })
+-- Optional: Update footer dynamically
+-- UI:SetFooter("YouTube:AntiGodHub - Updated")
+
+return UI
